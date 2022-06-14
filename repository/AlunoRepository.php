@@ -32,6 +32,21 @@
         return $lstAlunos;
     }
 
+    function fnLocalizaAlunoPorNome($nome) {
+        $con = getConnection();
+
+        $sql = "select * from aluno where nome like :pNome limit 20";
+
+        $stmt = $con->prepare($sql);
+
+        $stmt->bindValue(":pNome", "%{$nome}%");
+
+        if($stmt->execute()) {
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            return $stmt->fetchAll();
+        }
+    }
+
     function fnLocalizaAlunoPorId($id) {
         $con = getConnection();
 

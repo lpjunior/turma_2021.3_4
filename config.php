@@ -1,4 +1,7 @@
 <?php
+    # https://www.php.net/manual/pt_BR/features.cookies.php
+
+    # https://www.php.net/manual/pt_BR/features.sessions.php
     session_start();
     
     # https://www.php.net/manual/pt_BR/function.date-default-timezone-set.php

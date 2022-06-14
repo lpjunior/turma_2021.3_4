@@ -24,8 +24,8 @@
           <a class="nav-link disabled"><?= $_SESSION['login']->email ?></a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form id="formSearchName" class="d-flex" role="search" method="post" action="localiza-aluno.php">
+        <input id="searchName" class="form-control me-2" name="nomeAluno" type="search" placeholder="Informe o nome" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
