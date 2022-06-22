@@ -1,7 +1,4 @@
-<?php
-    include('config.php');  
-    $notificacao = filter_input(INPUT_GET, 'notify', FILTER_SANITIZE_SPECIAL_CHARS);
-?>
+<?php include('config.php'); ?>
 <!doctype html>
 <html lang="pt_BR">
   <head>
@@ -32,7 +29,7 @@
                     <div id="helperMatricula" class="form-text">Informe a matricula</div>
                 </div>
                 <button type="submit" class="btn btn-dark">Enviar</button>
-                <div id="notify" class="form-text text-capitalize fs-4"><?= $notificacao ?></div>
+                <div id="notify" class="form-text text-capitalize fs-4"><?= isset($_COOKIE['notify']) ? $_COOKIE['notify'] : '' ?></div>
             </form>
         </fieldset>
     </div>

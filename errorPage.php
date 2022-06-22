@@ -1,10 +1,8 @@
-<?php
-    $notify = $_GET['notify'];
-
-
-    if($notify == 'acesso-negado'){
-        $msg = "Acesso negado. Favor efetuar o login para acessar o sistema";
-    }
+<?php 
+  if(!isset($_COOKIE['notify'])) {
+    header('location: index.php');
+    exit;
+  }
 ?>
 <!doctype html>
 <html lang="pt_BR">
@@ -16,7 +14,7 @@
   </head>
   <body>
     <div class="col-6 offset-3">
-        <h1><?= $msg ?></h1>
+        <h1><?= $_COOKIE['notify'] ?></h1>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   </body>

@@ -10,6 +10,8 @@
     # https://www.php.net/manual/pt_BR/function.array-key-exists
     if(!array_key_exists('login', $_SESSION) || empty(isset($_SESSION['login'])))
     {
-        header("location: errorPage.php?notify=acesso-negado");
+        $page = "errorPage.php";
+        setcookie('notify', $msg, time() + 10, "/sga/{$page}", 'localhost');
+        header("location: {$page}");
         exit;
     }

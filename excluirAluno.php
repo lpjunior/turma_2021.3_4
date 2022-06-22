@@ -4,13 +4,13 @@
 
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-    $msg = "";
     if(fnDeleteAluno($id)) {
         $msg = "Sucesso ao apagar";
     } else {
         $msg = "Falha ao apagar";
     }
 
-    # redirect para a página de formulário
-    header("location: listagem-de-alunos.php?notify={$msg}");
+    $page = "listagem-de-alunos.php";
+    setcookie('notify', $msg, time() + 10, "/sga/{$page}", 'localhost');
+    header("location: {$page}");
     exit;

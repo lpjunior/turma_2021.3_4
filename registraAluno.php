@@ -7,13 +7,14 @@
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $matricula = filter_input(INPUT_POST, 'matricula', FILTER_SANITIZE_NUMBER_INT);
 
-    $msg = "";
     if(fnAddAluno($nome, $email, $matricula)) {
         $msg = "Sucesso ao gravar";
     } else {
         $msg = "Falha na gravação";
     }
-
+    
+    $page = "formulario-cadastro-aluno.php";
+    setcookie('notify', $msg, time() + 10, "sga/{$page}", 'localhost');
     # redirect para a página de formulário
-    header("location: formulario-cadastro-aluno.php?notify={$msg}");
+    header("location: {$page}");
     exit;
