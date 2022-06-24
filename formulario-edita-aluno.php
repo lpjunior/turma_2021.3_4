@@ -1,13 +1,8 @@
 <?php 
     include('config.php');
     require_once('repository/AlunoRepository.php'); 
-    
-    if(isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-    } else {
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    }
 
+    $id = $_SESSION['id'];
     $aluno = fnLocalizaAlunoPorId($id);
 ?>
 <!doctype html>

@@ -26,7 +26,7 @@
       </ul>
       <form id="formSearchName" class="d-flex" role="search" method="post" action="localiza-aluno.php">
         <input id="searchName" class="form-control me-2" name="nomeAluno" type="search" placeholder="Informe o nome" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <a class="btn btn-outline-danger" href="logout.php">Logout</a>
       </form>
     </div>
   </div>

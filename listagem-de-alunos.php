@@ -31,12 +31,12 @@
                 <?php foreach(fnLocalizaAlunoPorNome($nome) as $aluno): ?>
                 <tr>
                    <td><?= $aluno->id ?></td> 
-                   <td><?= $aluno->nome ?></td> 
+                   <td><?= $aluno->nome ?></td>
                    <td><?= $aluno->email ?></td> 
                    <td><?= $aluno->matricula ?></td> 
                    <td><?= $aluno->created_at ?></td> 
-                   <td><a href="formulario-edita-aluno.php?id=<?= $aluno->id ?>">Editar</a></td> 
-                   <td><a onclick="return confirm('Deseja realmente excluir?');" href="excluirAluno.php?id=<?= $aluno->id ?>">Excluir</a></td> 
+                   <td><a href="#" onclick="gerirUsuario(<?= $aluno->id ?>, 'edit');">Editar</a></td> 
+                   <td><a onclick="return confirm('Deseja realmente excluir?') ? gerirUsuario(<?= $aluno->id ?>, 'del') : '';" href="#">Excluir</a></td> 
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -50,5 +50,33 @@
         </table>
     </div>
     <?php include("rodape.php"); ?>
+    <script>
+        window.post = (data) => {
+            return fetch(
+                'set-session.php',
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                }
+            )
+            .then(response => {
+                // template string
+                console.log(`Requisição completa! Resposta:`, response);
+            });
+        }
+
+        function gerirUsuario(id, action) {
+            
+            post({data : id});
+
+            url = 'excluirAluno.php';
+            if(action === 'edit')
+                url = 'formulario-edita-aluno.php';
+            
+            // redirect do javacript
+            window.location.href = url;
+        }
+    </script>
   </body>
 </html>
