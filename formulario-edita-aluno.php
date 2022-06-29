@@ -1,26 +1,31 @@
-<?php 
-    include('config.php');
-    require_once('repository/AlunoRepository.php'); 
+<?php
+include('config.php');
+require_once('repository/AlunoRepository.php');
 
-    $id = $_SESSION['id'];
-    $aluno = fnLocalizaAlunoPorId($id);
+$id = $_SESSION['id'];
+$aluno = fnLocalizaAlunoPorId($id);
 ?>
 <!doctype html>
 <html lang="pt_BR">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Formulário Cadastro Aluno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  </head>
-  <body>
+</head>
+
+<body>
     <?php include('navbar.php'); ?>
     <div class="col-6 offset-3">
         <fieldset>
             <legend>Edição de Aluno</legend>
             <form action="editaAluno.php" method="post" class="form">
+                <div class="card col-4 offset-4 text-center">
+                    <img src="./<?= $aluno->foto ?>" class="rounded" alt="foto do usuário">
+                </div>
                 <div>
-                    <input type="hidden" name="idAluno" id="alunoId"value="<?= $aluno->id ?>">
+                    <input type="hidden" name="idAluno" id="alunoId" value="<?= $aluno->id ?>">
                 </div>
                 <div class="mb-3 form-group">
                     <label for="nomeId" class="form-label">Nome</label>
@@ -43,5 +48,6 @@
         </fieldset>
     </div>
     <?php include("rodape.php"); ?>
-  </body>
+</body>
+
 </html>

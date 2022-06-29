@@ -23,22 +23,22 @@
         </div>
         <div class="mb-3 form-group">
           <label for="fotoId" class="form-label">Foto</label>
-          <input type="file" name="foto" id="fotoId" class="form-control" required>
+          <input type="file" name="foto" id="fotoId" class="form-control" >
           <div id="helperFoto" class="form-text">Importe a foto</div>
         </div>
         <div class="mb-3 form-group">
           <label for="nomeId" class="form-label">Nome</label>
-          <input type="text" name="nome" id="nomeId" class="form-control" placeholder="Informe o nome" required>
+          <input type="text" name="nome" id="nomeId" class="form-control" placeholder="Informe o nome" >
           <div id="helperNome" class="form-text">Informe o nome completo</div>
         </div>
         <div class="mb-3 form-group">
           <label for="emailId" class="form-label">E-mail</label>
-          <input type="email" name="email" id="emailId" class="form-control" placeholder="Informe o e-mail" required>
+          <input type="email" name="email" id="emailId" class="form-control" placeholder="Informe o e-mail" >
           <div id="helperEmail" class="form-text">Informe o e-mail</div>
         </div>
         <div class="mb-3 form-group">
           <label for="matriculaId" class="form-label">Matricula</label>
-          <input type="number" name="matricula" id="matriculaId" class="form-control" placeholder="Informe a matricula" required>
+          <input type="number" name="matricula" id="matriculaId" class="form-control" placeholder="Informe a matricula" >
           <div id="helperMatricula" class="form-text">Informe a matricula</div>
         </div>
         <button type="submit" class="btn btn-dark">Enviar</button>

@@ -3,14 +3,15 @@
 
     # CRUD
 
-    function fnAddAluno($nome, $email, $matricula) {
+    function fnAddAluno($nome, $foto, $email, $matricula) {
         $con = getConnection();
         
         # SQL Injection
-        $sql = "insert into aluno (nome, email, matricula) values (:pNome, :pEmail, :pMatricula)";
+        $sql = "insert into aluno (nome, foto, email, matricula) values (:pNome, :pFoto, :pEmail, :pMatricula)";
         
         $stmt = $con->prepare($sql);
         $stmt->bindParam(":pNome", $nome); 
+        $stmt->bindParam(":pFoto", $foto); 
         $stmt->bindParam(":pEmail", $email); 
         $stmt->bindParam(":pMatricula", $matricula); 
         

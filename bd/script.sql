@@ -11,6 +11,8 @@ create or replace table aluno(
     created_at TIMESTAMP not null default CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+alter table aluno add column foto text not null default "imagens\\avatar.png" after nome;
+
 create or replace table login(
     id int primary key auto_increment,
     email varchar(250) not null unique,
