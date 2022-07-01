@@ -63,14 +63,15 @@
         return null;
     }
     
-    function fnUpdateAluno($id, $nome, $email, $matricula) {
+    function fnUpdateAluno($id, $nome, $foto, $email, $matricula) {
         $con = getConnection();
                 
-        $sql = "update aluno set nome = :pNome, email = :pEmail, matricula = :pMatricula where id = :pID";
+        $sql = "update aluno set nome = :pNome, foto = :pFoto, email = :pEmail, matricula = :pMatricula where id = :pID";
         
         $stmt = $con->prepare($sql);
         $stmt->bindParam(":pID", $id); 
         $stmt->bindParam(":pNome", $nome); 
+        $stmt->bindParam(":pFoto", $foto); 
         $stmt->bindParam(":pEmail", $email); 
         $stmt->bindParam(":pMatricula", $matricula); 
         

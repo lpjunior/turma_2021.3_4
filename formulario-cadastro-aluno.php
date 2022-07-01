@@ -47,6 +47,6 @@
     </fieldset>
   </div>
   <?php include("rodape.php"); ?>
+  <script src="js/base64.js"></script>
 </body>
-
 </html>
