@@ -1,0 +1,16 @@
+{
+    "name": "senac/sga",
+    "description": "Sistema de controle de alunos do Senac Rio",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lpjunior",
+            "email": "prof.lpjunior@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpmailer/phpmailer": "dev-master"
+    }
+}

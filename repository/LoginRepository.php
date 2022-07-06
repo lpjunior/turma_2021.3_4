@@ -18,3 +18,19 @@
 
         return null;
     }
+
+    function fnAtualizaSenha($email, $senha) {
+        $con = getConnection();
+
+        $sql = "update login set senha = :pSenha where email = :pEmail";
+
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(":pEmail", $email);
+        $stmt->bindValue(":pSenha", md5($senha));
+
+        if($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
