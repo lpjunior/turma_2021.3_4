@@ -1,9 +1,7 @@
 <?php 
-    include('config.php'); 
-    require_once('repository/AlunoRepository.php'); 
-    
+    include('config.php');
+    require_once('repository/AlunoRepository.php');
     $nome = filter_input(INPUT_GET, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
-
 ?>
 <!doctype html>
 <html lang="pt_BR">
@@ -36,7 +34,7 @@
                    <td><?= $aluno->matricula ?></td> 
                    <td><?= $aluno->created_at ?></td> 
                    <td><a href="#" onclick="gerirUsuario(<?= $aluno->id ?>, 'edit');">Editar</a></td> 
-                   <td><a onclick="return confirm('Deseja realmente excluir?') ? gerirUsuario(<?= $aluno->id ?>, 'del') : '';" href="#">Excluir</a></td> 
+                   <td><a href="#" onclick="return confirm('Deseja realmente excluir?') ? gerirUsuario(<?= $aluno->id ?>, 'del') : '';">Excluir</a></td> 
                 </tr>
                 <?php endforeach; ?>
             </tbody>

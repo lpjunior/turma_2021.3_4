@@ -12,6 +12,7 @@ create or replace table aluno(
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 alter table aluno add column foto text not null default "imagens\\avatar.png" after nome;
+alter table aluno change column foto foto longtext not null default "imagens\\avatar.png";
 
 create or replace table login(
     id int primary key auto_increment,

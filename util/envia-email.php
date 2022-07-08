@@ -2,6 +2,7 @@
 
     # importações
     use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
 
     require_once('vendor/autoload.php');
 
@@ -10,16 +11,16 @@
 
     # credenciais do conta(email) de envio
     define('GUSER', 'aula.sendmail@gmail.com');
-    define('GPWD', 'Senac@123qwe..');
+    define('GPWD', 'vbzmyonvgjpgacio');
 
     function send($usuario){
         $mail = new PHPMailer;
 
         # configuração do email
        $mail->isSMTP();
-       $mail->SMTPDebug = 2; # 0 - não debugar, 1 - client message, 2 - server e client message
+       $mail->SMTPDebug = SMTP::DEBUG_OFF; # 0 - não debugar, 1 - client message, 2 - server e client message
        $mail->Host = 'smtp.gmail.com';
-       $mail->SMTPSecure = 'ssl';
+       $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
        $mail->Port = 465;
        $mail->SMTPAuth = true;
        $mail->Username = GUSER;
