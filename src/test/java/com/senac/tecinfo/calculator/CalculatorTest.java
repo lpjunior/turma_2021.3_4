@@ -2,32 +2,36 @@ package com.senac.tecinfo.calculator;
 
 import com.senac.tecinfo.interfaces.ICalculator;
 import com.senac.tecinfo.model.Calculator;
-import org.junit.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
 
     private static ICalculator calculator;
 
-    @BeforeClass // executa ao inicia a classe
+    @BeforeAll // executa ao inicia a classe
     public static void initCalculator() {
         calculator = new Calculator();
     }
 
-    @AfterClass // executa ao finalizar a classe
+    @AfterAll // executa ao finalizar a classe
     public static void done() {
         System.out.println("Fim dos testes");
     }
 
-    @Before
+    @BeforeEach
     public void beforeEachTest() {
         System.out.println("Essa mensagem vai aparecer antes de cada teste");
     }
 
-    @After
+    @AfterEach
     public void afterEachTest() {
         System.out.println("Essa mensagem vai aparecer depois de cada teste");
     }
@@ -54,8 +58,8 @@ public class CalculatorTest {
         System.out.println("result = " + result);
     }
 
-    @Ignore
-    @Test(expected = Exception.class)
+    @Disabled
+    @Test()
     public void testDivison2() throws Exception {
         int result = calculator.divison(2, 0);
         System.out.println("result = " + result);
