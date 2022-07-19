@@ -17,8 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
@@ -29,11 +29,6 @@ public class ToDoControllerTest {
 
     @MockBean
     private ToDoService toDoService;
-
-    // caso de teste - buscar todos os ToDo
-
-    // finalizamos a aula com o nosso caso de teste com falha
-    // na próxima aula vamos fazer a alteração minimalista o inclusão do endpoint(/todo)
 
     @Test
     void getAllToDos() throws Exception {
