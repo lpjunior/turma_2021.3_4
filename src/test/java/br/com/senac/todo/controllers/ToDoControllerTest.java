@@ -40,4 +40,19 @@ public class ToDoControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/todos").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(2))).andDo(print());
     }
+
+    // finalizamos a cobertura de testes da nossa classe service
+    // finalizamos a aula com um erro no test de getToDo para efetuar a correção minimalista na próxima aula.
+
+    // Atividade de vocês: Resolver o problema getToDo
+    // +++ implementar os testes para edit, save e delete
+
+    @Test
+    void getToDo() throws Exception {
+        var toDo = new ToDo(1L, "Comer três vezes", true);
+        Mockito.when(toDoService.findById(toDo.getId())).thenReturn(toDo);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/todo/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", Matchers.hasSize(1))).andDo(print());
+    }
 }

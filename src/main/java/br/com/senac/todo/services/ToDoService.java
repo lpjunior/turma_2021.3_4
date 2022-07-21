@@ -2,7 +2,6 @@ package br.com.senac.todo.services;
 
 import br.com.senac.todo.model.ToDo;
 import br.com.senac.todo.repositories.ToDoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +19,19 @@ public class ToDoService {
         return toDoRepository.findAll();
     }
 
+    public ToDo findById(long toDoId) {
+        return toDoRepository.findById(toDoId).orElse(new ToDo());
+    }
+
     public ToDo save(ToDo toDo) {
-        return toDoRepository.save(toDo);
+        return toDoRepository.save(toDo); // implementa o upsert
+    }
+
+    public List<ToDo> saveAll(List<ToDo> toDoList) {
+        return toDoRepository.saveAll(toDoList);
+    }
+
+    public void deleteById(long toDoId) {
+        toDoRepository.deleteById(toDoId);
     }
 }
