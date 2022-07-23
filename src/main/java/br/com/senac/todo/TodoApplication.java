@@ -19,7 +19,7 @@ public class TodoApplication {
 
     private Info apiInfo() {
         return new Info().title("todo")
-                .description("Gerenciador de tarefas")
+                .description("ToDo Manager")
                 .version("v1.0.0");
     }
 }
