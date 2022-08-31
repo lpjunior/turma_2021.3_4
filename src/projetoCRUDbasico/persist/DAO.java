@@ -25,7 +25,7 @@ public class DAO {
     }
 
     protected Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql:localhost/db01", "root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost/db01", "root", "root");
     }
 
     public static void main(String[] args) {
