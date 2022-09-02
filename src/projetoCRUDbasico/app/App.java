@@ -1,12 +1,14 @@
 package projetoCRUDbasico.app;
 
 import projetoCRUDbasico.model.Aluno;
+import projetoCRUDbasico.service.AlunoService;
 
 import javax.swing.*;
 
 // FQN "Full Qualified Name: projetoCRUDbasico.app.App
 public class App {
     public static void main(String[] args) {
+        var service = new AlunoService();
         Aluno alu; // referencia a classe Aluno
         alu = new Aluno(); // criando uma nova instancia e atribuindo o endereço de memória dessa instancia para a referencia
         /* Sistema
@@ -25,7 +27,19 @@ public class App {
         var sexo = JOptionPane.showInputDialog(null, "Informe o sexo: ", "Input Nome", JOptionPane.QUESTION_MESSAGE);
         alu.setSexo(sexo);
 
-        var msg = "Aluno.nome: " + alu.getNome() + "\n" + "Aluno.email: " + alu.getEmail() + "\n" + "Aluno.matricula: " + alu.getMatricula() + "\n" + "Aluno.sexo: " + alu.getSexo();
-        JOptionPane.showMessageDialog(null, msg, "Resposta", JOptionPane.INFORMATION_MESSAGE);
+        var situacao = "Ocorreu uma falha na gravação. Verifique o log";
+        var iconeStatus = JOptionPane.ERROR_MESSAGE;
+
+        var response = service.save(alu);
+        if(response) {
+            situacao = "Gravado com sucesso";
+            iconeStatus = JOptionPane.INFORMATION_MESSAGE;
+        }
+
+        var msg = "Situação da gravação no banco: " + situacao + "\n\n" + "Aluno.nome: " + alu.getNome() + "\n" + "Aluno.email: " + alu.getEmail() + "\n" + "Aluno.matricula: " + alu.getMatricula() + "\n" + "Aluno.sexo: " + alu.getSexo();
+        JOptionPane.showMessageDialog(null, msg, "Resposta", iconeStatus);
+
+        var respostaList = service.findAll().stream().map(aluno -> "Aluno.nome: " + aluno.getNome() + "\n" + "Aluno.email: " + aluno.getEmail() + "\n" + "Aluno.matricula: " + aluno.getMatricula() + "\n" + "Aluno.sexo: " + aluno.getSexo() + "\n\n").toList();
+        JOptionPane.showMessageDialog(null, respostaList, "Resposta", JOptionPane.INFORMATION_MESSAGE);
     }
 }

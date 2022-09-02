@@ -1,6 +1,6 @@
-package projetoCRUDbasico.model;
+package projetoCRUDbasico.exempla;
 
-import projetoCRUDbasico.model.enums.TipoBolo;
+import projetoCRUDbasico.exempla.enums.TipoBolo;
 
 public class Bolo {
     private int qtdFarinha;

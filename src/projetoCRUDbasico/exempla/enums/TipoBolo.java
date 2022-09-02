@@ -1,4 +1,4 @@
-package projetoCRUDbasico.model.enums;
+package projetoCRUDbasico.exempla.enums;
 
 public enum TipoBolo {
     COMUM,

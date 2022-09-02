@@ -1,4 +1,4 @@
-package projetoCRUDbasico.structures;
+package projetoCRUDbasico.exempla;
 
 public class EstruturaDeDecisao {
 
