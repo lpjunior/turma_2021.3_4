@@ -7,7 +7,7 @@ Esse repositório destina-se a turma **2021.3/4** do Senac RJ unidade Marechal F
 
 - PHP com banco de dados
 - Teste de software
-- Java
+- Linguagem de programação
 
 ## Tecnologias utilizadas nas UCs
 
