@@ -6,7 +6,7 @@ import projetoCRUDbasico.service.AlunoService;
 import javax.swing.*;
 
 // FQN "Full Qualified Name: projetoCRUDbasico.app.App
-public class App {
+public class AppSave {
     public static void main(String[] args) {
         var service = new AlunoService();
         Aluno alu; // referencia a classe Aluno
@@ -38,8 +38,5 @@ public class App {
 
         var msg = "Situação da gravação no banco: " + situacao + "\n\n" + "Aluno.nome: " + alu.getNome() + "\n" + "Aluno.email: " + alu.getEmail() + "\n" + "Aluno.matricula: " + alu.getMatricula() + "\n" + "Aluno.sexo: " + alu.getSexo();
         JOptionPane.showMessageDialog(null, msg, "Resposta", iconeStatus);
-
-        var respostaList = service.findAll().stream().map(aluno -> "Aluno.nome: " + aluno.getNome() + "\n" + "Aluno.email: " + aluno.getEmail() + "\n" + "Aluno.matricula: " + aluno.getMatricula() + "\n" + "Aluno.sexo: " + aluno.getSexo() + "\n\n").toList();
-        JOptionPane.showMessageDialog(null, respostaList, "Resposta", JOptionPane.INFORMATION_MESSAGE);
     }
 }
