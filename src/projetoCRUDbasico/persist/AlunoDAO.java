@@ -1,5 +1,7 @@
 package projetoCRUDbasico.persist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import projetoCRUDbasico.model.Aluno;
 
 import java.sql.Connection;
@@ -8,254 +10,174 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AlunoDAO extends DAO {
-    private Connection conn;
+
+    private static Logger logger = LoggerFactory.getLogger(AlunoDAO.class);
 
     public boolean save(Aluno aluno) {
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("insert into aluno(nome, email, matricula, sexo) values (?, ?, ?, ?)");
+        var sql = "insert into aluno(nome, email, matricula, sexo) values (?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
 
             pstmt.setString(1, aluno.getNome());
             pstmt.setString(2, aluno.getEmail());
             pstmt.setInt(3, aluno.getMatricula());
             pstmt.setString(4, aluno.getSexo());
 
-            var response = pstmt.executeUpdate(); // retorna error => 0 | success => 1
-
-            if(response != 0)
-                return Boolean.TRUE;
-            return Boolean.FALSE;
+            logger.info("Query executada: {}", sql);
+            return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE; // retorna error => 0 | success => 1
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on save aluno. Error: " + e.getMessage());
+            logger.error("Error on save aluno. Error: {}", e);
             return Boolean.FALSE;
-        } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-                if(pstmt != null)
-                    pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
     }
 
     public List<Aluno> findAll() {
 
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("select * from aluno");
-            rs = pstmt.executeQuery();
+        var alunos = new ArrayList<Aluno>();
+        var sql = "select * from aluno";
 
-            var alunos = new ArrayList<Aluno>();
-            while(rs.next()) {
-                var aluno = new Aluno();
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMatricula(rs.getInt("matricula"));
-                aluno.setSexo(rs.getString("sexo"));
-                alunos.add(aluno);
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            logger.info("Query executada: {}", sql);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    alunos.add(setAluno(rs));
+                }
             }
-            return alunos;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on list alunos. Error: " + e.getMessage());
+            logger.error("Error on list alunos. Error: {}", e);
             return new ArrayList<>();
-        } finally {
-            try {
-                if(pstmt != null)
-                    pstmt.close();
-                if(rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
+        return alunos;
     }
 
     public Aluno findById(long id) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("select * from aluno where id = ?");
+        var sql = "select * from aluno where id = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setLong(1, id);
-            rs = pstmt.executeQuery();
 
-            Aluno aluno = new Aluno();
-            if(rs.next()){
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMatricula(rs.getInt("matricula"));
-                aluno.setSexo(rs.getString("sexo"));
+            logger.info("Query executada: {}", sql);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? setAluno(rs) : new Aluno();
             }
-            return aluno;
-        } catch(SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on find id aluno. Error: " + e.getMessage());
+        } catch (SQLException e) {
+            logger.error("Error on find id aluno. Error: {}", e);
             return new Aluno();
-        } finally {
-            try {
-                if(pstmt != null)
-                    pstmt.close();
-                if(rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
     }
 
     public List<Aluno> findByName(String nome) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("select * from aluno where nome like ?");
+        var alunos = new ArrayList<Aluno>();
+        var sql = "select * from aluno where nome like ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, '%' + nome + '%');
-            rs = pstmt.executeQuery();
 
-            var alunos = new ArrayList<Aluno>();
-            while(rs.next()) {
-                var aluno = new Aluno();
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMatricula(rs.getInt("matricula"));
-                aluno.setSexo(rs.getString("sexo"));
-                alunos.add(aluno);
+            logger.info("Query executada: {}", sql);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    alunos.add(setAluno(rs));
+                }
             }
-            return alunos;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on list alunos. Error: " + e.getMessage());
+            logger.error("Error on list alunos. Error: {}", e);
             return new ArrayList<>();
-        } finally {
-            try {
-                if(pstmt != null)
-                    pstmt.close();
-                if(rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
+        return alunos;
     }
 
     public Aluno findByMatricula(int matricula) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        var sql = "select * from aluno where matricula = ?";
 
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("select * from aluno where matricula = ?");
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, matricula);
-            rs = pstmt.executeQuery();
 
-            Aluno aluno = new Aluno();
-            if(rs.next()){
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMatricula(rs.getInt("matricula"));
-                aluno.setSexo(rs.getString("sexo"));
+            logger.info("Query executada: {}", sql);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? setAluno(rs) : new Aluno();
             }
-            return aluno;
-        } catch(SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on find id aluno. Error: " + e.getMessage());
+        } catch (SQLException e) {
+            logger.error("Error on find id aluno. Error: {}", e);
             return new Aluno();
-        } finally {
-            try {
-                if(pstmt != null)
-                    pstmt.close();
-                if(rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
+        }
+    }
+
+    public boolean update(Aluno aluno) {
+        var sql = "update aluno set nome = ?, email = ?, matricula = ?, sexo = ? where id  = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, aluno.getNome());
+            pstmt.setString(2, aluno.getEmail());
+            pstmt.setInt(3, aluno.getMatricula());
+            pstmt.setString(4, aluno.getSexo());
+            pstmt.setInt(5, aluno.getId());
+
+            logger.info("Query executada: {}", sql);
+            return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
+
+        } catch (SQLException e) {
+            logger.error("Error on save aluno. Error: {}", e);
+            return Boolean.FALSE;
         }
     }
 
     public Aluno findByEmail(String email) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        var sql = "select * from aluno where email = ?";
 
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("select * from aluno where email = ?");
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, email);
-            rs = pstmt.executeQuery();
 
-            Aluno aluno = new Aluno();
-            if(rs.next()){
-                aluno.setNome(rs.getString("nome"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMatricula(rs.getInt("matricula"));
-                aluno.setSexo(rs.getString("sexo"));
+            logger.info("Query executada: {}", sql);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? setAluno(rs) : new Aluno();
             }
-            return aluno;
-        } catch(SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on find id aluno. Error: " + e.getMessage());
+        } catch (SQLException e) {
+            logger.error("Error on find id aluno. Error: {}", e);
             return new Aluno();
-        } finally {
-            try {
-                if(pstmt != null)
-                    pstmt.close();
-                if(rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
     }
-
-    //public boolean update(Aluno aluno) {}
 
     public boolean deleteById(long id) {
-        PreparedStatement pstmt = null;
+        var sql = "delete from aluno where id = ?";
 
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement("delete from aluno where id = ?");
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setLong(1, id);
 
-            var response = pstmt.executeUpdate();
-
-            if(response != 0)
-                return Boolean.TRUE;
-            return Boolean.FALSE;
+            logger.info("Query executada: {}", sql);
+            return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Error on delete aluno. Error: " + e.getMessage());
+            logger.error("Error on delete aluno. Error: {}", e);
             return Boolean.FALSE;
-        } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-                if(pstmt != null)
-                    pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println("Error on close statements. Error: " + e.getMessage());
-            }
         }
-
     }
 
-    //public boolean deleteAll() {}
+    public boolean deleteAll(List<Aluno> alunos) {
+        var sql = "delete from aluno where id in (?)";
+
+        //# workaround(gambiarra) para o MySQL
+        String sqlIN = alunos.stream()
+                .map(aluno -> String.valueOf(aluno.getId()))
+                .collect(Collectors.joining(",", "(", ")"));
+        sql = sql.replace("(?)", sqlIN);
+        //## workaround(gambiarra) para o MySQL
+
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+// O método createArrayOf não é suportado pela lib do MySQL
+//            var idsInList = alunos.stream().map(Aluno::getId).toList();
+//            var idsInArray = conn.createArrayOf("integer", idsInList.toArray());
+//            pstmt.setArray(1, idsInArray);
+            logger.info("Query executada: {}", sql);
+            return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
+        } catch (SQLException e) {
+            logger.error("Error on delete table aluno. Error: {}", e);
+            return Boolean.FALSE;
+        }
+    }
+
+    private Aluno setAluno(ResultSet rs) throws SQLException {
+        return new Aluno(rs.getInt("id"), rs.getString("nome"), rs.getString("email"), rs.getInt("matricula"), rs.getString("sexo"));
+    }
 }

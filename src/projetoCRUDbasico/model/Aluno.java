@@ -1,10 +1,29 @@
 package projetoCRUDbasico.model;
 
 public class Aluno {
-    protected String nome;
+
+    private int id;
+    private String nome;
     private String email;
     private int matricula;
     private String sexo;
+
+    public Aluno() {}
+
+    public Aluno(int id, String nome, String email, int matricula, String sexo) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.matricula = matricula;
+        this.sexo = sexo;
+    }
+
+    public Aluno(String nome, String email, int matricula, String sexo) {
+        this.nome = nome;
+        this.email = email;
+        this.matricula = matricula;
+        this.sexo = sexo;
+    }
 
     // ecapsulamento
     public void setNome(String nome) {
@@ -49,5 +68,13 @@ public class Aluno {
 
     public Aluno retornaAluno() {
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

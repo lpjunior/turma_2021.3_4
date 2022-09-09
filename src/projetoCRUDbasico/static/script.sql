@@ -1,4 +1,5 @@
 -- https://dev.mysql.com/doc/refman/8.0/en/create-table.html
+-- https://dev.mysql.com/doc/refman/8.0/en/integer-types.html
 
 create database if not exists db01;
 use db01;

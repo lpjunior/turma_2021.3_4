@@ -39,4 +39,8 @@ public class AlunoService {
     public boolean deleteById(long id) {
         return dao.deleteById(id);
     }
+
+    public boolean deleteAll(List<Aluno> alunos) {
+        return dao.deleteAll(alunos);
+    }
 }

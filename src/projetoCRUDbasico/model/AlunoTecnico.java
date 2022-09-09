@@ -1,7 +1,5 @@
 package projetoCRUDbasico.model;
 
-import projetoCRUDbasico.model.Aluno;
-
 public class AlunoTecnico extends Aluno {
 
     private String especializacao;
@@ -12,7 +10,7 @@ public class AlunoTecnico extends Aluno {
     * */
     @Override
     public String getNome() {
-        return "Aluno curso técnico: " + nome;
+        return "Aluno curso técnico: " + getNome();
     }
 
 
