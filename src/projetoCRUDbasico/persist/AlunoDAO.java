@@ -18,6 +18,7 @@ public class AlunoDAO extends DAO {
 
     public boolean save(Aluno aluno) {
         var sql = "insert into aluno(nome, email, matricula, sexo) values (?, ?, ?, ?)";
+        // https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)){
 
             pstmt.setString(1, aluno.getNome());
@@ -25,22 +26,21 @@ public class AlunoDAO extends DAO {
             pstmt.setInt(3, aluno.getMatricula());
             pstmt.setString(4, aluno.getSexo());
 
-            logger.info("Query executada: {}", sql);
+            logger.debug("Query executada: {}", sql);
             return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE; // retorna error => 0 | success => 1
 
         } catch (SQLException e) {
-            logger.error("Error on save aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on save aluno. Error: {}", e.getMessage());
             return Boolean.FALSE;
         }
     }
 
     public List<Aluno> findAll() {
-
         var alunos = new ArrayList<Aluno>();
         var sql = "select * from aluno";
-
+        // Java versão 7+
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             logger.info("Query executada: {}", sql);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -48,7 +48,8 @@ public class AlunoDAO extends DAO {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error on list alunos. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on list alunos. Error: {}", e.getMessage());
             return new ArrayList<>();
         }
         return alunos;
@@ -64,7 +65,8 @@ public class AlunoDAO extends DAO {
                 return rs.next() ? setAluno(rs) : new Aluno();
             }
         } catch (SQLException e) {
-            logger.error("Error on find id aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on find id aluno. Error: {}", e.getMessage());
             return new Aluno();
         }
     }
@@ -82,7 +84,8 @@ public class AlunoDAO extends DAO {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error on list alunos. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on list alunos. Error: {}", e.getMessage());
             return new ArrayList<>();
         }
         return alunos;
@@ -99,7 +102,8 @@ public class AlunoDAO extends DAO {
                 return rs.next() ? setAluno(rs) : new Aluno();
             }
         } catch (SQLException e) {
-            logger.error("Error on find id aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on find id aluno. Error: {}", e.getMessage());
             return new Aluno();
         }
     }
@@ -118,7 +122,8 @@ public class AlunoDAO extends DAO {
             return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
 
         } catch (SQLException e) {
-            logger.error("Error on save aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on save aluno. Error: {}", e.getMessage());
             return Boolean.FALSE;
         }
     }
@@ -134,7 +139,8 @@ public class AlunoDAO extends DAO {
                 return rs.next() ? setAluno(rs) : new Aluno();
             }
         } catch (SQLException e) {
-            logger.error("Error on find id aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on find id aluno. Error: {}", e.getMessage());
             return new Aluno();
         }
     }
@@ -148,7 +154,8 @@ public class AlunoDAO extends DAO {
             logger.info("Query executada: {}", sql);
             return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
         } catch (SQLException e) {
-            logger.error("Error on delete aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on delete aluno. Error: {}", e.getMessage());
             return Boolean.FALSE;
         }
     }
@@ -157,9 +164,11 @@ public class AlunoDAO extends DAO {
         var sql = "delete from aluno where id in (?)";
 
         //# workaround(gambiarra) para o MySQL
-        String sqlIN = alunos.stream()
-                .map(aluno -> String.valueOf(aluno.getId()))
-                .collect(Collectors.joining(",", "(", ")"));
+        var sqlIN = alunos
+                .stream()// # 1. abre a transmissao
+                .map(aluno -> String.valueOf(aluno.getId())) // 2. transforma o dado
+                .collect(Collectors.joining(",", "(", ")")); // 3. transformando concatenando
+
         sql = sql.replace("(?)", sqlIN);
         //## workaround(gambiarra) para o MySQL
 
@@ -172,7 +181,8 @@ public class AlunoDAO extends DAO {
             logger.info("Query executada: {}", sql);
             return (pstmt.executeUpdate() != 0) ? Boolean.TRUE : Boolean.FALSE;
         } catch (SQLException e) {
-            logger.error("Error on delete table aluno. Error: {}", e);
+            e.printStackTrace();
+            logger.error("Error on delete table aluno. Error: {}", e.getMessage());
             return Boolean.FALSE;
         }
     }
