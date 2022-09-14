@@ -1,0 +1,28 @@
+https://devcenter.heroku.com/categories/reference
+
+api rest
+fornecer todos endpoints
+somente o backend
+
+front será feito em angular <- não será trabalhado em aula
+spring
+postgres ?
+jpa/hibernate
+testing tdd
+
+gerenciamento de funcionários
+
+cadastro do funcionário
+	-> dados pessoais
+	-> dados profissionais
+	aux. administrativo -> coord. técnico
+	formação em admin, tecnologia, pedagogia
+	trabalho na empresa xpto 10 anos e 2 anos na empresa xxx
+	salario base -> salario com comissão
+	-> dados bancarios ?
+	banco/conta/agencia
+	salario base -> salario com comissão
+
+Cadastro do setor
+	-> dados do setor
+	-> equipe relacionada
