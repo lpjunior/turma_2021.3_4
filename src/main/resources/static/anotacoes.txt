@@ -14,6 +14,7 @@ gerenciamento de funcionários
 
 cadastro do funcionário
 	-> dados pessoais
+	    nome, email, sexo, cpf, telefone
 	-> dados profissionais
 	aux. administrativo -> coord. técnico
 	formação em admin, tecnologia, pedagogia
