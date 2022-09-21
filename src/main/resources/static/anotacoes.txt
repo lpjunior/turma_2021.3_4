@@ -27,3 +27,9 @@ cadastro do funcionário
 Cadastro do setor
 	-> dados do setor
 	-> equipe relacionada
+
+
+Swagger
+https://swagger.io/docs/
+
+backend x front

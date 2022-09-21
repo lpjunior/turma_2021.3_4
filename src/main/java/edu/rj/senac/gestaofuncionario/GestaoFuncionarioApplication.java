@@ -26,3 +26,4 @@ public class GestaoFuncionarioApplication {
                 .version("1.0.0");
     }
 }
+

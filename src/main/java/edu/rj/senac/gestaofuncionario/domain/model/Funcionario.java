@@ -17,7 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Funcionario {
-    // UUID - Identificador único universal (universally unique identifier)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID funcionarioId;
@@ -36,7 +35,17 @@ public class Funcionario {
     private String cpf;
 
     @ElementCollection
-    @CollectionTable(name = "telefone", joinColumns = @JoinColumn(name = "funcionario_id", foreignKey = @ForeignKey(name = "fkey_funcionario_id")))
+    @CollectionTable(
+            name = "telefone",
+            joinColumns =
+                @JoinColumn(
+                        name = "funcionario_id",
+                        foreignKey =
+                            @ForeignKey(
+                                name = "fkey_funcionario_id"
+                            )
+                )
+    )
     @Column(name = "numero_telefone")
     private List<String> telefone;
 }
