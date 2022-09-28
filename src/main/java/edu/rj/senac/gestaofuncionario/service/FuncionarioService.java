@@ -31,4 +31,12 @@ public class FuncionarioService {
     public void deleteById(UUID id) {
         funcionarioRepository.deleteById(id);
     }
+
+    public void update(UUID id, String email) {
+        funcionarioRepository.updateEmail(id, email);
+    }
+
+    public Funcionario findByEmail(String email) {
+        return funcionarioRepository.findByEmail(email);
+    }
 }

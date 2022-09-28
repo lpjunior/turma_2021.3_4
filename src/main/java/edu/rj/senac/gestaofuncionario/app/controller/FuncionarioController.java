@@ -3,7 +3,6 @@ package edu.rj.senac.gestaofuncionario.app.controller;
 import edu.rj.senac.gestaofuncionario.domain.model.Funcionario;
 import edu.rj.senac.gestaofuncionario.service.FuncionarioService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,23 +38,29 @@ public class FuncionarioController {
         return new ResponseEntity<>(funcionarioService.findAll(), OK);
     }
 
-    @GetMapping(value = "/funcionario/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Localiza um funcionários pelo ID", responses = {@ApiResponse(description = "Sucesso ao consultar o funcionário", responseCode = "200", content = @Content)})
+    @GetMapping(value = "/funcionario/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Localiza um funcionário pelo ID", responses = {@ApiResponse(description = "Sucesso ao consultar o funcionário", responseCode = "200", content = @Content)})
     ResponseEntity<Funcionario> findById(@PathVariable UUID id) {
         return new ResponseEntity<>(funcionarioService.findById(id), OK);
     }
 
+    @GetMapping(value = "/funcionario/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Localiza um funcionário pelo email", responses = {@ApiResponse(description = "Sucesso ao consultar o funcionário", responseCode = "200", content = @Content)})
+    ResponseEntity<Funcionario> findById(@PathVariable String email) {
+        return new ResponseEntity<>(funcionarioService.findByEmail(email), OK);
+    }
+
     @PutMapping(value = "/funcionario", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "atualiza um funcionário", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "201", content = @Content)})
+    @Operation(summary = "atualiza um funcionário", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
     ResponseEntity<?> update(@RequestBody Funcionario funcionario) {
         funcionarioService.save(funcionario);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @PatchMapping(value = "/funcionario", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "atualiza um funcionário", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "201", content = @Content)})
-    ResponseEntity<?> updateEmail(@Parameter String email) {
-        //funcionarioService.save(email);
+    @PatchMapping(value = "/funcionario")
+    @Operation(summary = "atualiza um funcionário", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
+    ResponseEntity<?> updateEmail(@RequestParam UUID id, @RequestParam String email) {
+        funcionarioService.update(id, email);
         return new ResponseEntity<>(NO_CONTENT);
     }
 

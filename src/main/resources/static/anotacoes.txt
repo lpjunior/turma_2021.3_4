@@ -33,3 +33,7 @@ Swagger
 https://swagger.io/docs/
 
 backend x front
+
+Proxima aula..
+Token JWT -> https://jwt.io/
+Spring Security *
