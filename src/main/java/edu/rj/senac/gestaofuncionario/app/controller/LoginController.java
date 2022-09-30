@@ -33,7 +33,7 @@ public class LoginController {
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Efetua o login de um login", responses = {@ApiResponse(description = "Sucesso ao efetuar o login", responseCode = "200", content = @Content)})
-    ResponseEntity<String> login(@RequestBody Login login) {
+    ResponseEntity<Login> login(@RequestBody Login login) {
         return new ResponseEntity<>(loginService.login(login), OK);
     }
 

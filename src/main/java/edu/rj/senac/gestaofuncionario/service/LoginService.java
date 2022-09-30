@@ -23,8 +23,8 @@ public class LoginService {
         loginRepository.deleteById(id);
     }
 
-    public String login(Login login) {
-        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.cThIIoDvwdueQB468K5xDc5633seEFoqwxjF_xSJyQQ";
+    public Login login(Login login) {
+        return loginRepository.findByEmailAndSenha(login.getEmail(), login.getSenha());
     }
 
     public void logoff(UUID id) {

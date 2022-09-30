@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository("loginRepository")
 public interface LoginRepository extends JpaRepository<Login, UUID> {
+    Login findByEmailAndSenha(String email, String senha);
 }

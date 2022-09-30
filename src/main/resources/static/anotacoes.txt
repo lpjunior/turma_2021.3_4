@@ -37,3 +37,8 @@ backend x front
 Proxima aula..
 Token JWT -> https://jwt.io/
 Spring Security *
+
+criar um diretório de configuração do projeto
+spring security
+cors
+swagger
